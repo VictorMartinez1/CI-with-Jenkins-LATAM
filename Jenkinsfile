@@ -30,7 +30,7 @@ pipeline {
         stage('Build and push Docker Image') {
             steps {
                 script {
-                    appomage=docker.build( "victormartinez1/Andresdark2:${env.BUILD_ID}"}
+                    appomage=docker.build( "victormartinez1/:${env.BUILD_ID}"}
                     docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
                        appimage.push("${env.BUILD_ID}")
                     }
