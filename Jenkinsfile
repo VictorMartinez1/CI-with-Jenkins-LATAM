@@ -32,17 +32,20 @@ pipeline {
                 script {
                     appomage=docker.build( "victormartinez1/Andresdark2:${env.BUILD_ID}"}
                     docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
-                            myapp.push("latest")
-                            myapp.push("${env.BUILD_ID}")
+                       appimage.push("${env.BUILD_ID}")
                     }
                 }
             }
         }        
-       // stage('Deploy to GKE') {
-         //   steps{
-           //     sh "sed -i 's/hello:latest/hello:${env.BUILD_ID}/g' deployment.yaml"
-             //   step([$class: 'KubernetesEngineBuilder', projectId: env.PROJECT_ID, clusterName: env.CLUSTER_NAME, location: env.LOCATION, manifestPattern: 'deployment.yaml', credentialsId: env.CREDENTIALS_ID, verifyDeployments: true])
-            //}
-        //}
+        stage('Deploy to kubernetes') {
+           steps{
+             echo "Deploying to kubernetes cluster..."
+             sh 'ls -ltr'
+             sh 'pwd
+             sh "sed -i 's/tagversion/:${env.BUILD_ID}/g' deployment.yaml"
+             step([$class: 'KubernetesEngineBuilder', projectId: env.PROJECT_ID, clusterName: env.CLUSTER_NAME, location: env.LOCATION, manifestPattern: 'deployment.yaml', credentialsId: env.CREDENTIALS_ID, verifyDeployments: true])
+             echo "Deployment to kunernetes cluster complete..."
+            }
+        }
     }    
 }
