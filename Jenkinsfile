@@ -11,7 +11,7 @@ pipeline {
     agent any
     environment {
         PROJECT_ID = 'victormartinez1'
-        CLUSTER_NAME = ' cluster-kubernet'
+        CLUSTER_NAME = 'cluster-kubernet'
         LOCATION = 'us-central1-c'
         CREDENTIALS_ID = 'gke'
     }
@@ -24,13 +24,13 @@ pipeline {
         stage('Build package') {
             steps {
                 echo "Cleaning and packing"
-                sh 'mvn clean package'
+                sh ''''mvn clean package'''
             }
         }
         stage('Test') {
             steps {
                 echo "Testing.."
-                sh 'mvn test'
+                sh ''''mvn test'''
             }
         }    
         stage('Build and push Docker Image') {
